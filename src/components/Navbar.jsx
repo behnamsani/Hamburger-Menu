@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Hambur from './Hambur';
+
 const Div = styled.div`
     background:rgb(180, 0, 150);
     width:100%;
@@ -8,10 +8,12 @@ const Div = styled.div`
     @media (max-width:768px){
         width:250px;
         height:100vh;
-        position:fix;
+        position:fixed;
         top:0;
         left:0;
-        display:${props => props.open ? 'block':'none'};
+        display:block;
+        transform: ${props => props.status ? 'translateX(0)' : 'translateX(-250px)'};
+        transition: all 300ms;
     }
 `;
 const Ul = styled.ul`
@@ -24,13 +26,13 @@ const Ul = styled.ul`
         height:100vh;
         display:block;
         text-align:left;
-        padding: 60px 0;
+        padding: 100px 0;
     }
 `;
 const Li = styled.li`
     color: #fff;
     list-style: none;
-    margin: 0 15px;
+    margin: 0 25px;
     padding:10px;
     cursor: pointer;
     border-radius:10px ;
@@ -45,13 +47,12 @@ const Li = styled.li`
 `;
 
 class Navbar extends Component {
-    state = {  
-        open:true,
-    } 
+    
     render() { 
+        const {status} = this.props;
         return (
             <>
-                <Div open={this.state.open}>
+                <Div status={status}>
                     <Ul>
                         <Li> Home </Li>
                         <Li> Project </Li>
@@ -59,16 +60,11 @@ class Navbar extends Component {
                         <Li> Connect Us </Li>
                     </Ul>
                 </Div>
-                <Hambur />
+                
             </>
             
             
         );
-    }
-    menuHandel= ()=> {
-        this.setState({
-            open :!this.state.open,
-        });
     }
 }
  
